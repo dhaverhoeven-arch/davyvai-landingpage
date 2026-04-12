@@ -226,6 +226,13 @@
                 });
 
                 if (response.ok) {
+                    // Trigger n8n webhook to send email
+                    fetch('https://davycc.app.n8n.cloud/webhook/lead-freebie', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: name, email: email, freebie: freebie })
+                    });
+
                     document.getElementById('formSection').style.display = 'none';
                     document.getElementById('successSection').style.display = 'block';
                 } else {
