@@ -172,8 +172,8 @@
         <div class="avatar"><img src="davy.jpg" alt="Davy Verhoeven"></div>
         <div class="name">Davy Verhoeven</div>
 
-        <h1 class="headline">Ik stuur je de <span>gratis template</span> direct naar je inbox</h1>
-        <p class="subtext">Vul je email in en ik stuur hem meteen. Geen spam, geen gedoe.</p>
+        <h1 class="headline" id="headline">Ik stuur je de <span>gratis template</span> direct naar je inbox</h1>
+        <p class="subtext" id="subtext">Vul je email in en ik stuur hem meteen. Geen spam, geen gedoe.</p>
 
         <div id="formSection">
             <div class="form-group">
@@ -197,6 +197,42 @@
         // Lees de freebie parameter uit de URL
         const params = new URLSearchParams(window.location.search);
         const freebie = params.get('f') || 'default';
+
+        // Pas de tekst aan op basis van de freebie
+        const freebieConfig = {
+            'ochtend-routine': {
+                headline: 'Krijg je <span>Ochtend Content Routine</span> direct in je inbox',
+                subtext: 'Typ "start mijn ochtend" in Claude Code en je content is in 12 minuten klaar.'
+            },
+            'content-manager': {
+                headline: 'Krijg je eigen <span>AI Content Manager</span> direct in je inbox',
+                subtext: 'Claude bedenkt je ideeën, schrijft je scripts en plant je content.'
+            },
+            'business-assistent': {
+                headline: 'Krijg je eigen <span>AI Business Assistent</span> direct in je inbox',
+                subtext: 'Claude helpt je met strategie, taken en je business laten groeien.'
+            },
+            'content-strateeg': {
+                headline: 'Krijg je eigen <span>AI Content Strateeg</span> direct in je inbox',
+                subtext: 'Claude analyseert wat werkt en helpt je slimmer groeien.'
+            },
+            'script-schrijver': {
+                headline: 'Krijg je eigen <span>AI Script Schrijver</span> direct in je inbox',
+                subtext: 'Claude schrijft video scripts in jouw stem, met sterke hooks.'
+            },
+            'skill': {
+                headline: 'Krijg de <span>Claude skill</span> waarmee je 1 video naar al je socials tegelijk post',
+                subtext: 'Film, drop in Dropbox, zeg "post mijn content" — klaar op 6 platforms. Vul je email in en ik stuur de setup + skill meteen.'
+            },
+            'default': {
+                headline: 'Ik stuur je de <span>gratis template</span> direct naar je inbox',
+                subtext: 'Vul je email in en ik stuur hem meteen. Geen spam, geen gedoe.'
+            }
+        };
+
+        const config = freebieConfig[freebie] || freebieConfig['default'];
+        document.getElementById('headline').innerHTML = config.headline;
+        document.getElementById('subtext').textContent = config.subtext;
 
         async function handleSubmit() {
             const name = document.getElementById('nameInput').value.trim();

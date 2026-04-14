@@ -1,0 +1,143 @@
+{
+  "name": "Lead Freebie Email",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-freebie",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "lead-freebie"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": { "caseSensitive": false },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.freebie }}",
+                    "rightValue": "ochtend-routine",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputLabel": "Ochtend Routine"
+            }
+          ]
+        },
+        "fallbackOutput": "extra"
+      },
+      "id": "switch-1",
+      "name": "Welke Freebie",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.email }}",
+        "subject": "Je Ochtend Content Routine — CLAUDE.md",
+        "emailType": "html",
+        "message": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 520px; margin: 0 auto; padding: 32px 20px; color: #1a1a1a;\">\n<p style=\"font-size: 18px; margin-bottom: 16px;\">Hey {{ $('Webhook').item.json.body.name || 'daar' }}!</p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 16px;\">Top dat je hem hebt aangevraagd. Dit is je persoonlijke <strong>Ochtend Content Routine</strong> voor Claude Code.</p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 16px;\">Zodra je dit bestandje koppelt, typ je <strong>\"start mijn ochtend\"</strong> en Claude geeft je content idee\u00ebn en helpt je met scripts en captions.</p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 20px;\"><a href=\"https://drive.google.com/file/d/1HUZlUYQ54H6L_9B6pZEnfsuMteY8NGy8/view?usp=drive_link\" style=\"display: inline-block; padding: 14px 28px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #ffffff; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 16px;\">Download je Ochtend Routine</a></p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 16px;\"><strong>Zo gebruik je hem:</strong></p>\n<ol style=\"font-size: 16px; line-height: 1.8; margin-bottom: 24px;\">\n<li>Ga naar claude.ai en maak een account aan (Pro plan)</li>\n<li>Download de desktop app via claude.ai/download</li>\n<li>Maak een mapje aan op je bureaublad, bijv. \"MijnContent\"</li>\n<li>Sla het bestand op als <code>CLAUDE.md</code> in dat mapje</li>\n<li>Open de map in Claude Code</li>\n<li>Type <strong>\"help me mijn CLAUDE.md invullen\"</strong></li>\n<li>Daarna typ je <strong>\"start mijn ochtend\"</strong> en Claude gaat aan de slag</li>\n</ol>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 16px;\"><strong>Belangrijk:</strong> werk altijd vanuit dezelfde map. Claude onthoudt je instellingen omdat het bestand daar staat.</p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 24px;\">Loop je ergens vast? Stuur me gewoon een DM op Instagram. Ik help je persoonlijk verder.</p>\n\n<p style=\"font-size: 16px; margin-bottom: 8px;\">Succes ermee,<br><strong>Davy</strong></p>\n<a href=\"https://instagram.com/davyv.ai\" style=\"color: #6366f1; text-decoration: none; font-size: 14px;\">@davyv.ai op Instagram</a>\n</div>",
+        "options": {}
+      },
+      "id": "gmail-ochtend",
+      "name": "Email Ochtend Routine",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [800, 200]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.email }}",
+        "subject": "Hier is je gratis CLAUDE template!",
+        "emailType": "html",
+        "message": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 520px; margin: 0 auto; padding: 32px 20px; color: #1a1a1a;\">\n<p style=\"font-size: 18px; margin-bottom: 16px;\">Hey {{ $('Webhook').item.json.body.name || 'daar' }}!</p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 16px;\">Nice dat je hem hebt aangevraagd. Dit is je persoonlijke CLAUDE.md template voor Claude Code.</p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 20px;\"><a href=\"https://drive.google.com/file/d/1b7jW2HnFzXn8xYCLhSFPK8Adn16GMAep/view?usp=sharing\" style=\"display: inline-block; padding: 14px 28px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #ffffff; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 16px;\">Download je CLAUDE.md template</a></p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 16px;\"><strong>Hoe je hem gebruikt:</strong></p>\n<ol style=\"font-size: 16px; line-height: 1.8; margin-bottom: 24px;\">\n<li>Sla het bestand op als <code>CLAUDE.md</code> in je projectmap</li>\n<li>Open Claude Code in die map</li>\n<li>Type iets \u2014 Claude start automatisch het interview</li>\n<li>Beantwoord de vragen en je hebt een persoonlijke AI-assistent</li>\n</ol>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 24px;\">Vragen? Stuur me een DM op Instagram \u2014 ik help je graag.</p>\n\n<p style=\"font-size: 16px; margin-bottom: 8px;\">Groeten,<br><strong>Davy</strong></p>\n<a href=\"https://instagram.com/davyv.ai\" style=\"color: #6366f1; text-decoration: none; font-size: 14px;\">@davyv.ai op Instagram</a>\n</div>",
+        "options": {}
+      },
+      "id": "gmail-default",
+      "name": "Email Default (CC)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [800, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true}",
+        "options": {}
+      },
+      "id": "respond-1",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1100, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Welke Freebie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Welke Freebie": {
+      "main": [
+        [
+          {
+            "node": "Email Ochtend Routine",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email Default (CC)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Ochtend Routine": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Default (CC)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "Lead Freebie Email (Brevo)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-freebie",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "lead-freebie"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.brevo.com/v3/smtp/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api-key",
+              "value": "JOUW_BREVO_API_KEY_HIER"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"sender\": {\n    \"name\": \"Davy Verhoeven\",\n    \"email\": \"davy@davyv-ai.nl\"\n  },\n  \"to\": [\n    {\n      \"email\": \"{{ $json.body.email }}\",\n      \"name\": \"{{ $json.body.name }}\"\n    }\n  ],\n  \"subject\": \"Hier is je gratis template!\",\n  \"htmlContent\": \"<div style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; max-width: 520px; margin: 0 auto; padding: 32px 20px; color: #1a1a1a;'><p style='font-size: 18px; margin-bottom: 16px;'>Hey {{ $json.body.name }}!</p><p style='font-size: 16px; line-height: 1.6; margin-bottom: 16px;'>Nice dat je hem hebt aangevraagd. Hieronder vind je je template als bijlage.</p><p style='font-size: 16px; line-height: 1.6; margin-bottom: 16px;'><strong>Hoe je hem gebruikt:</strong></p><ol style='font-size: 16px; line-height: 1.8; margin-bottom: 24px;'><li>Sla het bestand op als CLAUDE.md in je projectmap</li><li>Open Claude Code in die map</li><li>Type iets — Claude start automatisch het interview</li><li>Beantwoord de vragen en je hebt een persoonlijke AI-assistent</li></ol><p style='font-size: 16px; line-height: 1.6; margin-bottom: 24px;'>Vragen? Stuur me een DM op Instagram — ik help je graag.</p><p style='font-size: 16px; margin-bottom: 8px;'>Groeten,<br><strong>Davy</strong></p><a href='https://instagram.com/davyv.ai' style='color: #6366f1; text-decoration: none; font-size: 14px;'>@davyv.ai op Instagram</a></div>\"\n}",
+        "options": {}
+      },
+      "id": "brevo-1",
+      "name": "Send Email via Brevo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true}",
+        "options": {}
+      },
+      "id": "respond-1",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [750, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Email via Brevo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email via Brevo": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
