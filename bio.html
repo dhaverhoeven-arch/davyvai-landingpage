@@ -153,7 +153,24 @@
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
+            transition: opacity 0.2s;
         }
+
+        .form-group button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .success-box {
+            display: none;
+            padding: 18px;
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 10px;
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        .success-box .check { font-size: 36px; margin-bottom: 8px; }
+        .success-box h3 { font-size: 16px; margin-bottom: 6px; }
+        .success-box p { color: #a1a1aa; font-size: 13px; }
 
         .trust {
             margin-top: 12px;
@@ -236,12 +253,20 @@
             </ul>
             <p>Van de basis tot de workflows die ik nu zelf gebruik.</p>
 
-            <div class="form-group">
-                <input type="text" id="nameInput" placeholder="Je voornaam">
-                <input type="email" id="emailInput" placeholder="Je e-mailadres">
-                <button onclick="handleSubmit()">Zet me op de wachtlijst</button>
+            <div id="formSection">
+                <div class="form-group">
+                    <input type="text" id="nameInput" placeholder="Je voornaam">
+                    <input type="email" id="emailInput" placeholder="Je e-mailadres">
+                    <button id="submitBtn" onclick="handleSubmit()">Zet me op de wachtlijst</button>
+                </div>
+                <p class="trust">Early-bird prijs voor de eerste 50 leden. Geen spam.</p>
             </div>
-            <p class="trust">Early-bird prijs voor de eerste 50 leden. Geen spam.</p>
+
+            <div class="success-box" id="successSection">
+                <div class="check">&#10003;</div>
+                <h3>Je staat op de lijst!</h3>
+                <p>Check je inbox — ik heb je een bevestiging gestuurd.</p>
+            </div>
         </div>
 
         <!-- SOCIALS -->
@@ -256,12 +281,55 @@
     </div>
 
     <script>
-        function handleSubmit() {
+        async function handleSubmit() {
             const name = document.getElementById('nameInput').value.trim();
             const email = document.getElementById('emailInput').value.trim();
+            const btn = document.getElementById('submitBtn');
+
             if (!name || !email) return alert('Vul je naam en mail in.');
-            alert('Preview mockup — submit logica komt bij echte deploy.');
+
+            btn.disabled = true;
+            btn.textContent = 'Even geduld...';
+
+            try {
+                const response = await fetch('https://nzumqrhhfabjsgwvfhmo.supabase.co/rest/v1/leads', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dW1xcmhoZmFianNnd3ZmaG1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTgwMzgsImV4cCI6MjA5MTI5NDAzOH0.ie1oP8cjJW67Fvekxd3Lvpfp4RfWUTI67XpoVGdwNZs',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56dW1xcmhoZmFianNnd3ZmaG1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTgwMzgsImV4cCI6MjA5MTI5NDAzOH0.ie1oP8cjJW67Fvekxd3Lvpfp4RfWUTI67XpoVGdwNZs'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        freebie: 'wachtlijst',
+                        source: 'bio',
+                        created_at: new Date().toISOString()
+                    })
+                });
+
+                if (response.ok) {
+                    fetch('https://davycc.app.n8n.cloud/webhook/lead-freebie', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: name, email: email, freebie: 'wachtlijst' })
+                    });
+
+                    document.getElementById('formSection').style.display = 'none';
+                    document.getElementById('successSection').style.display = 'block';
+                } else {
+                    throw new Error('Fout bij versturen');
+                }
+            } catch (error) {
+                btn.disabled = false;
+                btn.textContent = 'Probeer opnieuw';
+                alert('Er ging iets mis. Probeer het nog een keer.');
+            }
         }
+
+        document.getElementById('emailInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleSubmit();
+        });
     </script>
 </body>
 </html>
