@@ -29,17 +29,20 @@
         }
 
         .avatar {
-            width: 96px;
-            height: 96px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            margin: 0 auto 24px;
+            margin: 0 auto 28px;
             overflow: hidden;
+            border: 2px solid #e89374;
+            box-shadow: 0 8px 32px rgba(232, 147, 116, 0.25);
         }
 
         .avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center 25%;
         }
 
         .name {
@@ -58,7 +61,7 @@
         }
 
         .headline span {
-            background: linear-gradient(135deg, #6366f1, #a78bfa);
+            background: linear-gradient(135deg, #e89374, #f5b89e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -94,7 +97,7 @@
         }
 
         .form-group input:focus {
-            border-color: #6366f1;
+            border-color: #e89374;
         }
 
         .form-group button {
@@ -102,16 +105,18 @@
             padding: 16px 20px;
             border-radius: 12px;
             border: none;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: #ffffff;
+            background: linear-gradient(135deg, #e89374, #d97e62);
+            color: #0a0a0a;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: opacity 0.2s, transform 0.1s;
+            transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 4px 16px rgba(232, 147, 116, 0.3);
         }
 
         .form-group button:hover {
-            opacity: 0.9;
+            box-shadow: 0 6px 24px rgba(232, 147, 116, 0.45);
+            opacity: 0.95;
         }
 
         .form-group button:active {
@@ -156,7 +161,7 @@
         .social-link {
             display: inline-block;
             margin-top: 32px;
-            color: #6366f1;
+            color: #e89374;
             text-decoration: none;
             font-size: 14px;
             transition: opacity 0.2s;
@@ -169,7 +174,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="avatar"><img src="davy.jpg" alt="Davy Verhoeven"></div>
+        <div class="avatar"><img src="davy-hero.png" alt="Davy Verhoeven"></div>
         <div class="name">Davy Verhoeven</div>
 
         <h1 class="headline" id="headline">Ik stuur je de <span>gratis template</span> direct naar je inbox</h1>
@@ -190,7 +195,7 @@
             <p>Ik heb de template naar je email gestuurd. Niet gekregen? Check je spam folder.</p>
         </div>
 
-        <a href="https://instagram.com/davyv.ai" target="_blank" class="social-link">@davyv.ai op Instagram</a>
+        <a href="https://instagram.com/davy_verhoeven" target="_blank" class="social-link">@davy_verhoeven op Instagram</a>
     </div>
 
     <script>
@@ -223,6 +228,10 @@
             'skill': {
                 headline: 'Krijg de <span>Claude skill</span> waarmee je 1 video naar al je socials tegelijk post',
                 subtext: 'Film, drop in Dropbox, zeg "post mijn content" — klaar op 6 platforms. Vul je email in en ik stuur de setup + skill meteen.'
+            },
+            'tradingview-prompt': {
+                headline: 'Koppel <span>Claude Code aan TradingView</span> in 1 prompt',
+                subtext: 'De exacte setup die ik dagelijks gebruik — MCP + m\'n price action rules in 1 keer geïnstalleerd. Vul je email in en ik stuur de prompt meteen.'
             },
             'default': {
                 headline: 'Ik stuur je de <span>gratis template</span> direct naar je inbox',
@@ -262,8 +271,13 @@
                 });
 
                 if (response.ok) {
-                    // Trigger n8n webhook to send email
-                    fetch('https://davycc.app.n8n.cloud/webhook/lead-freebie', {
+                    // Trigger n8n webhook to send email — route per freebie
+                    // tradingview-prompt gaat via v2 workflow (Gmail), rest via oude lead-freebie (Brevo)
+                    const webhookPaths = {
+                        'tradingview-prompt': 'lead-freebie-v2'
+                    };
+                    const webhookPath = webhookPaths[freebie] || 'lead-freebie';
+                    fetch(`https://davycc.app.n8n.cloud/webhook/${webhookPath}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ name: name, email: email, freebie: freebie })
