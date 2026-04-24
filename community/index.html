@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claude Code voor content creators — Davy Verhoeven</title>
+<meta name="description" content="De enige Nederlandse community waar content creators Claude Code leren gebruiken voor hun content pipeline. Launch 10 mei 2026." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --surface: #151514;
+    --orange: #D97757;
+    --orange-soft: rgba(217, 119, 87, 0.15);
+    --text: #FFFFFF;
+    --muted: #A0A0A0;
+    --border: rgba(255, 255, 255, 0.08);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  .grain {
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.025) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover { border-color: rgba(217, 119, 87, 0.3); }
+  .btn-primary {
+    background: var(--orange);
+    color: #0A0A0A;
+    transition: all 0.2s;
+    font-weight: 700;
+  }
+  .btn-primary:hover {
+    background: #E68865;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(217, 119, 87, 0.25);
+  }
+  .btn-ghost {
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+  .text-accent { color: var(--orange); }
+  .bg-orange-glow {
+    background: radial-gradient(ellipse at center, rgba(217, 119, 87, 0.12) 0%, transparent 70%);
+  }
+  .pulse-dot { animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .divider { border-color: var(--border); }
+  details[open] summary .plus { transform: rotate(45deg); }
+  summary::-webkit-details-marker { display: none; }
+</style>
+</head>
+<body class="grain">
+
+<!-- LAUNCH BANNER -->
+<div class="w-full py-2.5 text-center text-sm font-medium" style="background: var(--orange); color: #0A0A0A;">
+  🚀 Launch 10 mei 2026 · €27/mnd voor eerste 50 leden (normaal €37) · Lifetime locked
+</div>
+
+<!-- NAV -->
+<nav class="sticky top-0 z-50 backdrop-blur-xl border-b" style="background: rgba(10, 10, 10, 0.85); border-color: var(--border);">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <div class="w-7 h-7 rounded-lg flex items-center justify-center font-black text-sm" style="background: var(--orange); color: #0A0A0A;">D</div>
+      <span class="font-bold">davyv.ai</span>
+    </div>
+    <div class="hidden md:flex items-center gap-8 text-sm" style="color: var(--muted);">
+      <a href="#community" class="hover:text-white transition">Community</a>
+      <a href="#cursus" class="hover:text-white transition">Cursus</a>
+      <a href="#prijs" class="hover:text-white transition">Prijs</a>
+      <a href="#faq" class="hover:text-white transition">FAQ</a>
+    </div>
+    <a href="#prijs" class="btn-primary px-5 py-2 rounded-full text-sm">Zet me op de lijst</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="relative pt-24 pb-20 px-6 overflow-hidden">
+  <div class="absolute inset-0 bg-orange-glow pointer-events-none"></div>
+  <div class="relative max-w-4xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-sm card">
+      <span class="w-2 h-2 rounded-full pulse-dot" style="background: var(--orange);"></span>
+      <span style="color: var(--muted);">29 creators al op de wachtlijst</span>
+    </div>
+    <h1 class="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-6">
+      Wat een team van 4 mensen deed,<br/>
+      <span class="text-accent">doe jij nu in je eentje.</span>
+    </h1>
+    <p class="text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed" style="color: var(--muted);">
+      Ik leer content creators en solopreneurs hoe ze Claude Code gebruiken om sneller te werken en content te maken.
+      Zonder technisch te zijn.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10">
+      <a href="#prijs" class="btn-primary px-8 py-4 rounded-full text-base">
+        Zet me op de wachtlijst →
+      </a>
+      <a href="#cursus" class="btn-ghost px-8 py-4 rounded-full font-semibold text-base">
+        Bekijk de cursus
+      </a>
+    </div>
+    <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm mb-8" style="color: var(--muted);">
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Nederlands</div>
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Geen code nodig</div>
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Skool community</div>
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> 30 dagen geld-terug</div>
+    </div>
+    <p class="text-sm max-w-2xl mx-auto leading-relaxed" style="color: var(--muted); opacity: 0.75;">
+      Deze community is voor content creators en solopreneurs die Claude Code willen inzetten in hun dagelijkse workflow. Geen developer-cursus, geen enterprise-training — puur praktijk voor jouw business.
+    </p>
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<section class="py-12 border-y" style="border-color: var(--border); background: rgba(255,255,255,0.02);">
+  <div class="max-w-5xl mx-auto px-6">
+    <p class="text-center text-xs uppercase tracking-widest mb-8" style="color: var(--muted);">Wat je binnen 7 dagen bouwt</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div>
+        <div class="text-4xl font-black text-accent">30+</div>
+        <div class="text-sm mt-1" style="color: var(--muted);">Ideeën per ochtend</div>
+      </div>
+      <div>
+        <div class="text-4xl font-black text-accent">5 min</div>
+        <div class="text-sm mt-1" style="color: var(--muted);">Van idee naar script</div>
+      </div>
+      <div>
+        <div class="text-4xl font-black text-accent">100%</div>
+        <div class="text-sm mt-1" style="color: var(--muted);">Nederlandse spreektaal</div>
+      </div>
+      <div>
+        <div class="text-4xl font-black text-accent">0</div>
+        <div class="text-sm mt-1" style="color: var(--muted);">Regels code nodig</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEEM -->
+<section class="py-24 px-6">
+  <div class="max-w-4xl mx-auto">
+    <p class="text-sm uppercase tracking-widest text-accent mb-4">Herkenbaar?</p>
+    <h2 class="text-3xl md:text-5xl font-black mb-12 leading-tight">
+      Je weet dat AI alles verandert.<br/>
+      <span style="color: var(--muted);">Maar je staat nog steeds stil.</span>
+    </h2>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="card rounded-2xl p-6">
+        <h3 class="font-bold mb-2">Je verdrinkt in ChatGPT tabs</h3>
+        <p class="text-sm" style="color: var(--muted);">10 tabs open, overal een halve prompt, en niks komt ooit af.</p>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <h3 class="font-bold mb-2">Content kost je uren per dag</h3>
+        <p class="text-sm" style="color: var(--muted);">Ideeën bedenken, concurrentie checken, scripts schrijven, posten. Elke dag opnieuw.</p>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <h3 class="font-bold mb-2">Claude Code klinkt te technisch</h3>
+        <p class="text-sm" style="color: var(--muted);">Terminal. Code. MCP's. Je denkt: "dat is niet voor mij." Spoiler: wel.</p>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <h3 class="font-bold mb-2">Je concurrenten gaan voorbij</h3>
+        <p class="text-sm" style="color: var(--muted);">Zij posten 5x per dag. Jij 3x per week. Ze winnen niet omdat ze beter zijn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURSUS -->
+<section id="cursus" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <p class="text-sm uppercase tracking-widest text-accent mb-4">De cursus</p>
+      <h2 class="text-3xl md:text-5xl font-black mb-6 leading-tight">
+        4 modules.<br/>
+        Van nul naar <span class="text-accent">content machine</span>.
+      </h2>
+      <p class="max-w-2xl mx-auto" style="color: var(--muted);">Geen filler. Geen theorie. Elke les is iets wat je direct kunt gebruiken.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="card rounded-2xl p-8">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-5xl font-black" style="color: rgba(217, 119, 87, 0.25);">01</span>
+          <span class="text-xs px-3 py-1 rounded-full" style="background: var(--orange-soft); color: var(--orange);">Fundament</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Wat is Claude Code?</h3>
+        <p class="mb-6" style="color: var(--muted);">Installatie, eerste prompt, en hoe je praat tegen AI als een contentmaker i.p.v. een developer.</p>
+        <ul class="space-y-2 text-sm">
+          <li class="flex gap-2"><span class="text-accent">→</span> Installatie in 3 minuten</li>
+          <li class="flex gap-2"><span class="text-accent">→</span> Prompting voor niet-techneuten</li>
+          <li class="flex gap-2"><span class="text-accent">→</span> Je eerste script binnen 10 min</li>
+        </ul>
+      </div>
+
+      <div class="card rounded-2xl p-8">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-5xl font-black" style="color: rgba(217, 119, 87, 0.25);">02</span>
+          <span class="text-xs px-3 py-1 rounded-full" style="background: var(--orange-soft); color: var(--orange);">MCP's</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Connect alles.</h3>
+        <p class="mb-6" style="color: var(--muted);">Claude praat met Instagram, Airtable, Canva, Nano Banana. Geen copy-paste meer.</p>
+        <ul class="space-y-2 text-sm">
+          <li class="flex gap-2"><span class="text-accent">→</span> Instagram MCP setup</li>
+          <li class="flex gap-2"><span class="text-accent">→</span> Airtable als content brain</li>
+          <li class="flex gap-2"><span class="text-accent">→</span> Nano Banana voor visuals</li>
+        </ul>
+      </div>
+
+      <div class="card rounded-2xl p-8">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-5xl font-black" style="color: rgba(217, 119, 87, 0.25);">03</span>
+          <span class="text-xs px-3 py-1 rounded-full" style="background: var(--orange-soft); color: var(--orange);">Skills</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Bouw je eigen tools.</h3>
+        <p class="mb-6" style="color: var(--muted);">Maak skills die exact doen wat jij nodig hebt. Voor jouw niche. In jouw stem.</p>
+        <ul class="space-y-2 text-sm">
+          <li class="flex gap-2"><span class="text-accent">→</span> Bestaande skills gebruiken</li>
+          <li class="flex gap-2"><span class="text-accent">→</span> Je eigen hook-generator</li>
+          <li class="flex gap-2"><span class="text-accent">→</span> Content pipeline workflow</li>
+        </ul>
+      </div>
+
+      <div class="card rounded-2xl p-8">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-5xl font-black" style="color: rgba(217, 119, 87, 0.25);">04</span>
+          <span class="text-xs px-3 py-1 rounded-full" style="background: var(--orange-soft); color: var(--orange);">Workflow</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Van idee naar post.</h3>
+        <p class="mb-6" style="color: var(--muted);">De volledige flow. Ochtend tot avond. Eén command. Alles automatisch.</p>
+        <ul class="space-y-2 text-sm">
+          <li class="flex gap-2"><span class="text-accent">→</span> "Start mijn ochtend" workflow</li>
+          <li class="flex gap-2"><span class="text-accent">→</span> Script → visual → caption</li>
+          <li class="flex gap-2"><span class="text-accent">→</span> Auto-posten naar 5 platforms</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section id="community" class="py-24 px-6" style="background: rgba(255,255,255,0.02);">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-sm uppercase tracking-widest text-accent mb-4">De community</p>
+      <h2 class="text-3xl md:text-5xl font-black mb-6 leading-tight">
+        Meer dan een cursus.
+      </h2>
+      <p class="max-w-2xl mx-auto" style="color: var(--muted);">Een Skool community met directe toegang tot Davy en peers die hetzelfde bouwen als jij.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="card rounded-2xl p-6">
+        <div class="text-accent font-black text-2xl mb-3">01</div>
+        <h3 class="font-bold mb-2">Wekelijkse live call</h3>
+        <p class="text-sm" style="color: var(--muted);">Elke week 1 uur — nieuwe skills, Q&A, demo's. Opgenomen als je er niet bij kunt.</p>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <div class="text-accent font-black text-2xl mb-3">02</div>
+        <h3 class="font-bold mb-2">Skills library</h3>
+        <p class="text-sm" style="color: var(--muted);">Kant-en-klare workflows die ik zelf dagelijks gebruik. Kopieer, plak, pas aan.</p>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <div class="text-accent font-black text-2xl mb-3">03</div>
+        <h3 class="font-bold mb-2">Peer learning</h3>
+        <p class="text-sm" style="color: var(--muted);">Chat met creators die hetzelfde bouwen. Stel vragen, deel wins, help elkaar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOOR WIE -->
+<section class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="text-sm uppercase tracking-widest text-accent mb-4">Eerlijk zijn</p>
+      <h2 class="text-3xl md:text-5xl font-black mb-6">Is dit iets voor jou?</h2>
+      <p class="max-w-2xl mx-auto" style="color: var(--muted);">Deze community is voor content creators en solopreneurs die Claude Code willen inzetten in hun dagelijkse workflow. Geen developer-cursus, geen enterprise-training — puur praktijk voor jouw business.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="card rounded-2xl p-8">
+        <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+          <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm" style="background: var(--orange-soft); color: var(--orange);">✓</span>
+          Ja, als je...
+        </h3>
+        <ul class="space-y-3">
+          <li class="flex gap-3"><span class="text-accent flex-shrink-0">→</span> Al content maakt (of wilt beginnen)</li>
+          <li class="flex gap-3"><span class="text-accent flex-shrink-0">→</span> Klaar bent met elke dag hetzelfde doen</li>
+          <li class="flex gap-3"><span class="text-accent flex-shrink-0">→</span> Niet bang bent om dingen te proberen</li>
+          <li class="flex gap-3"><span class="text-accent flex-shrink-0">→</span> 3-5 uur per week kunt vrijmaken</li>
+          <li class="flex gap-3"><span class="text-accent flex-shrink-0">→</span> Je business wilt automatiseren met AI</li>
+        </ul>
+      </div>
+      <div class="card rounded-2xl p-8">
+        <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+          <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm" style="background: rgba(255,255,255,0.05); color: var(--muted);">✗</span>
+          Niet, als je...
+        </h3>
+        <ul class="space-y-3" style="color: var(--muted);">
+          <li class="flex gap-3"><span class="flex-shrink-0">→</span> Een quick-money scheme zoekt</li>
+          <li class="flex gap-3"><span class="flex-shrink-0">→</span> Denkt dat AI alles voor je doet</li>
+          <li class="flex gap-3"><span class="flex-shrink-0">→</span> Niet van huiswerk houdt</li>
+          <li class="flex gap-3"><span class="flex-shrink-0">→</span> Al een developer bent (dit is te basic)</li>
+          <li class="flex gap-3"><span class="flex-shrink-0">→</span> Er niks aan wilt uitgeven</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIJS -->
+<section id="prijs" class="py-24 px-6 relative">
+  <div class="absolute inset-0 bg-orange-glow pointer-events-none"></div>
+  <div class="relative max-w-3xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-sm uppercase tracking-widest text-accent mb-4">Founding members</p>
+      <h2 class="text-3xl md:text-5xl font-black mb-4">Eén prijs. Lifetime locked.</h2>
+      <p style="color: var(--muted);">Eerste 50 leden krijgen €27/mnd forever. Daarna gaat de prijs naar €37/mnd.</p>
+    </div>
+
+    <div class="card rounded-3xl p-10 relative overflow-hidden" style="box-shadow: 0 0 80px rgba(217, 119, 87, 0.12);">
+      <div class="absolute top-6 right-6 px-3 py-1 rounded-full text-xs font-bold" style="background: var(--orange); color: #0A0A0A;">
+        FOUNDING DEAL
+      </div>
+      <h3 class="text-2xl font-bold mb-2">Complete toegang</h3>
+      <p class="mb-6" style="color: var(--muted);">Cursus + Skool community + alle updates voor altijd</p>
+      <div class="flex items-baseline gap-3 mb-8">
+        <span class="text-6xl font-black text-accent">€27</span>
+        <span style="color: var(--muted);">/mnd</span>
+        <span class="line-through ml-2" style="color: #555;">€37</span>
+      </div>
+      <ul class="space-y-3 mb-8">
+        <li class="flex gap-3"><span class="text-accent">✓</span> <span>Volledige 4-module cursus (NL)</span></li>
+        <li class="flex gap-3"><span class="text-accent">✓</span> <span>Skool community met directe toegang tot Davy</span></li>
+        <li class="flex gap-3"><span class="text-accent">✓</span> <span>Skills library — kant-en-klare workflows</span></li>
+        <li class="flex gap-3"><span class="text-accent">✓</span> <span>Wekelijkse live Q&A's (NL)</span></li>
+        <li class="flex gap-3"><span class="text-accent">✓</span> <span>Maandelijks nieuwe skills & updates</span></li>
+        <li class="flex gap-3"><span class="text-accent">✓</span> <span>30 dagen geld-terug garantie</span></li>
+      </ul>
+
+      <!-- WAITLIST FORM -->
+      <form class="space-y-3 mb-4">
+        <input type="text" placeholder="Je voornaam" class="w-full px-4 py-3 rounded-xl border focus:outline-none" style="background: var(--bg); border-color: var(--border); color: var(--text);">
+        <input type="email" placeholder="Je e-mailadres" class="w-full px-4 py-3 rounded-xl border focus:outline-none" style="background: var(--bg); border-color: var(--border); color: var(--text);">
+        <button type="submit" class="btn-primary w-full py-4 rounded-full text-base">
+          Zet me op de wachtlijst →
+        </button>
+      </form>
+      <p class="text-center text-xs" style="color: var(--muted);">Launch 10 mei · Geen spam · Cancel wanneer je wilt</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="py-24 px-6" style="background: rgba(255,255,255,0.02);">
+  <div class="max-w-4xl mx-auto">
+    <div class="grid md:grid-cols-[220px_1fr] gap-10 items-center">
+      <div class="w-52 h-52 rounded-full mx-auto md:mx-0 overflow-hidden" style="border: 3px solid var(--orange); box-shadow: 0 0 40px rgba(217, 119, 87, 0.2);">
+        <img src="davy-hero.png" alt="Davy Verhoeven" class="w-full h-full object-cover" style="object-position: center 15%;" />
+      </div>
+      <div>
+        <p class="text-sm uppercase tracking-widest text-accent mb-3">Waarom bij mij</p>
+        <h2 class="text-3xl font-black mb-4">Davy Verhoeven</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--muted);">
+          Ik gebruik Claude Code om 70% van mijn content business op autopilot te zetten — competitor research, scripting, posting, analyses. Ik heb dyslexie, dus ik typ niet. Ik spreek in, Claude schrijft.
+        </p>
+        <p class="leading-relaxed" style="color: var(--muted);">
+          In deze community laat ik precies zien hoe. Geen bullshit. Geen technische taal. Gewoon de exacte workflow die werkt — zodat jij kunt focussen op filmen en schrijven, en Claude de rest doet.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="py-24 px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="text-sm uppercase tracking-widest text-accent mb-4">FAQ</p>
+      <h2 class="text-3xl md:text-5xl font-black">Veelgestelde vragen</h2>
+    </div>
+    <div class="space-y-3">
+      <details class="card rounded-2xl p-6 group">
+        <summary class="cursor-pointer font-bold flex justify-between items-center">
+          Wanneer start de community?
+          <span class="plus text-accent transition">+</span>
+        </summary>
+        <p class="mt-4" style="color: var(--muted);">10 mei 2026. Eerste 50 founding members krijgen €27/mnd locked forever.</p>
+      </details>
+      <details class="card rounded-2xl p-6 group">
+        <summary class="cursor-pointer font-bold flex justify-between items-center">
+          Moet ik kunnen programmeren?
+          <span class="plus text-accent transition">+</span>
+        </summary>
+        <p class="mt-4" style="color: var(--muted);">Nee. Echt niet. Claude Code klinkt technisch, maar je typt gewoon wat je wilt in het Nederlands. De cursus is gebouwd voor mensen die nog nooit een regel code hebben geschreven.</p>
+      </details>
+      <details class="card rounded-2xl p-6 group">
+        <summary class="cursor-pointer font-bold flex justify-between items-center">
+          Hoeveel tijd kost het per week?
+          <span class="plus text-accent transition">+</span>
+        </summary>
+        <p class="mt-4" style="color: var(--muted);">3-5 uur in de eerste 2 weken om het op te zetten. Daarna bespaar je juist tijd — je content workflow gaat van uren naar minuten per dag.</p>
+      </details>
+      <details class="card rounded-2xl p-6 group">
+        <summary class="cursor-pointer font-bold flex justify-between items-center">
+          Werkt dit op Mac én Windows?
+          <span class="plus text-accent transition">+</span>
+        </summary>
+        <p class="mt-4" style="color: var(--muted);">Ja. Claude Code draait op allebei. De cursus laat beide installaties zien.</p>
+      </details>
+      <details class="card rounded-2xl p-6 group">
+        <summary class="cursor-pointer font-bold flex justify-between items-center">
+          Wat als het niks voor mij is?
+          <span class="plus text-accent transition">+</span>
+        </summary>
+        <p class="mt-4" style="color: var(--muted);">30 dagen geld-terug garantie. Geen vragen. Gewoon mailen en je krijgt alles terug.</p>
+      </details>
+      <details class="card rounded-2xl p-6 group">
+        <summary class="cursor-pointer font-bold flex justify-between items-center">
+          Zit Claude Pro hierbij in?
+          <span class="plus text-accent transition">+</span>
+        </summary>
+        <p class="mt-4" style="color: var(--muted);">Nee. Je hebt een eigen Claude account nodig (Pro of Max). Dat is €18-90/mnd, los bij Anthropic. De community zelf staat daar los van.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="py-28 px-6 relative overflow-hidden">
+  <div class="absolute inset-0 bg-orange-glow pointer-events-none"></div>
+  <div class="relative max-w-3xl mx-auto text-center">
+    <h2 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+      Je concurrent is dit<br/>
+      <span class="text-accent">nu al aan het leren.</span>
+    </h2>
+    <p class="text-xl mb-10 max-w-xl mx-auto" style="color: var(--muted);">
+      Over 6 maanden is Claude Code overal. De vraag is niet óf je het leert — maar wanneer.
+    </p>
+    <a href="#prijs" class="btn-primary inline-block px-10 py-5 rounded-full text-lg">
+      Word founding member — €27/mnd →
+    </a>
+    <p class="text-sm mt-6" style="color: var(--muted);">Launch 10 mei · 30 dagen geld-terug · Founding prijs lifetime locked</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-12 px-6 border-t" style="border-color: var(--border);">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded-md flex items-center justify-center font-black text-xs" style="background: var(--orange); color: #0A0A0A;">D</div>
+      <span class="font-bold text-sm">davyv.ai</span>
+    </div>
+    <div class="text-sm" style="color: var(--muted);">© 2026 Davy Verhoeven</div>
+    <div class="flex gap-6 text-sm" style="color: var(--muted);">
+      <a href="https://instagram.com/davyv.ai" class="hover:text-white transition">Instagram</a>
+      <a href="#" class="hover:text-white transition">TikTok</a>
+      <a href="#" class="hover:text-white transition">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
