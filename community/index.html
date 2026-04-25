@@ -352,14 +352,19 @@
       </ul>
 
       <!-- WAITLIST FORM -->
-      <form class="space-y-3 mb-4">
-        <input type="text" placeholder="Je voornaam" class="w-full px-4 py-3 rounded-xl border focus:outline-none" style="background: var(--bg); border-color: var(--border); color: var(--text);">
-        <input type="email" placeholder="Je e-mailadres" class="w-full px-4 py-3 rounded-xl border focus:outline-none" style="background: var(--bg); border-color: var(--border); color: var(--text);">
-        <button type="submit" class="btn-primary w-full py-4 rounded-full text-base">
+      <form id="waitlistForm" class="space-y-3 mb-4" onsubmit="handleWaitlistSubmit(event)">
+        <input id="nameInput" type="text" placeholder="Je voornaam" required class="w-full px-4 py-3 rounded-xl border focus:outline-none" style="background: var(--bg); border-color: var(--border); color: var(--text);">
+        <input id="emailInput" type="email" placeholder="Je e-mailadres" required class="w-full px-4 py-3 rounded-xl border focus:outline-none" style="background: var(--bg); border-color: var(--border); color: var(--text);">
+        <button id="submitBtn" type="submit" class="btn-primary w-full py-4 rounded-full text-base">
           Zet me op de wachtlijst →
         </button>
       </form>
-      <p class="text-center text-xs" style="color: var(--muted);">Launch 10 mei · Geen spam · Cancel wanneer je wilt</p>
+      <div id="waitlistSuccess" class="hidden text-center py-8">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-full flex items-center justify-center text-2xl font-black" style="background: var(--orange); color: #0A0A0A;">✓</div>
+        <h3 class="text-2xl font-bold mb-2">Je staat op de lijst!</h3>
+        <p style="color: var(--muted);">Check je mail voor de bevestiging. Je hoort van me zodra we op 10 mei live gaan.</p>
+      </div>
+      <p id="waitlistFooter" class="text-center text-xs" style="color: var(--muted);">Launch 10 mei · Geen spam · Cancel wanneer je wilt</p>
     </div>
   </div>
 </section>
@@ -472,6 +477,57 @@
     </div>
   </div>
 </footer>
+
+<script>
+  const SUPABASE_URL = 'https://fciijklqnqyvqbvrqjcr.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_qO4Po8RNvRq9yIU79EnmVg_c_10nL3M';
+  const N8N_WEBHOOK = 'https://davycc.app.n8n.cloud/webhook/community-waitlist';
+
+  async function handleWaitlistSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('nameInput').value.trim();
+    const email = document.getElementById('emailInput').value.trim();
+    const btn = document.getElementById('submitBtn');
+
+    if (!name || !email) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Even geduld...';
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          freebie: 'community-waitlist',
+          source: 'community-landingpage'
+        })
+      });
+
+      if (!res.ok) throw new Error('insert failed');
+
+      fetch(N8N_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, freebie: 'community-waitlist' })
+      }).catch(() => {});
+
+      document.getElementById('waitlistForm').classList.add('hidden');
+      document.getElementById('waitlistFooter').classList.add('hidden');
+      document.getElementById('waitlistSuccess').classList.remove('hidden');
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Probeer opnieuw';
+      alert('Er ging iets mis. Probeer het nog een keer.');
+    }
+  }
+</script>
 
 </body>
 </html>

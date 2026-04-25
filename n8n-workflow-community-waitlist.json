@@ -1,0 +1,53 @@
+{
+  "name": "Community Waitlist Email",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "community-waitlist",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-cw",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "community-waitlist"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.email }}",
+        "subject": "Je staat op de wachtlijst — launch 10 mei",
+        "emailType": "html",
+        "message": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; padding: 40px 24px; background: #0A0A0A; color: #FFFFFF;\">\n\n<div style=\"display: inline-block; padding: 6px 14px; background: rgba(217, 119, 87, 0.15); color: #D97757; border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 24px;\">FOUNDING MEMBER · LIJST</div>\n\n<h1 style=\"font-size: 28px; font-weight: 900; line-height: 1.2; margin: 0 0 20px 0; color: #FFFFFF;\">Je staat op de lijst, {{ $('Webhook').item.json.body.name || 'daar' }}.</h1>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 20px; color: #D0D0D0;\">Top dat je erbij wilt zijn. Op <strong style=\"color: #FFFFFF;\">10 mei 2026</strong> gaat de community live — en jij krijgt de <strong style=\"color: #D97757;\">founding deal van €27/mnd lifetime locked</strong>.</p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 12px; color: #D0D0D0;\"><strong style=\"color: #FFFFFF;\">Wat er gebeurt nu:</strong></p>\n<ul style=\"font-size: 15px; line-height: 1.8; margin: 0 0 24px 0; padding-left: 20px; color: #D0D0D0;\">\n<li>Ik stuur je updates over wat ik aan het bouwen ben — geen spam, alleen de goede shit</li>\n<li>Op launch dag (10 mei) krijg jij als eerste de link om in te stappen</li>\n<li>De eerste 50 houden €27/mnd voor altijd — daarna wordt het €37</li>\n</ul>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 16px; color: #D0D0D0;\">Ondertussen: volg me op Instagram, daar post ik dagelijks wat ik bouw met Claude Code.</p>\n\n<p style=\"margin-bottom: 32px;\"><a href=\"https://instagram.com/davyv.ai\" style=\"display: inline-block; padding: 14px 28px; background: #D97757; color: #0A0A0A; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px;\">Volg @davyv.ai →</a></p>\n\n<p style=\"font-size: 15px; line-height: 1.6; margin-bottom: 8px; color: #D0D0D0;\">Tot 10 mei,</p>\n<p style=\"font-size: 15px; margin: 0; color: #FFFFFF;\"><strong>Davy</strong></p>\n\n<div style=\"margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 12px; color: #808080;\">\nJe krijgt deze mail omdat je je hebt ingeschreven op davyvai.nl/community.\n</div>\n\n</div>",
+        "options": {}
+      },
+      "id": "gmail-cw",
+      "name": "Email Waitlist",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [550, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true}",
+        "options": {}
+      },
+      "id": "respond-cw",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [850, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Email Waitlist", "type": "main", "index": 0 }]]
+    },
+    "Email Waitlist": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  }
+}
