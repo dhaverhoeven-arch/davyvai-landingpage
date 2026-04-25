@@ -234,6 +234,10 @@
                 headline: 'Koppel <span>Claude Code aan TradingView</span> in 1 prompt',
                 subtext: 'De exacte setup die ik dagelijks gebruik — MCP + m\'n price action rules in 1 keer geïnstalleerd. Vul je email in en ik stuur de prompt meteen.'
             },
+            'claude-md': {
+                headline: 'Krijg mijn <span>CLAUDE.md template</span> direct in je inbox',
+                subtext: 'Sla \'m op, open Claude Code, en hij stelt je de juiste vragen. Daarna kent hij je business — geheugen voor altijd.'
+            },
             'default': {
                 headline: 'Ik stuur je de <span>gratis template</span> direct naar je inbox',
                 subtext: 'Vul je email in en ik stuur hem meteen. Geen spam, geen gedoe.'
@@ -255,12 +259,23 @@
             btn.textContent = 'Even geduld...';
 
             try {
-                const response = await fetch('https://fciijklqnqyvqbvrqjcr.supabase.co/rest/v1/leads', {
+                // Supabase routing per freebie: trading freebies → MSA, content freebies → Claude Code Community
+                const supabaseProjects = {
+                    'claude-md': {
+                        url: 'https://nzumqrhhfabjsgwvfhmo.supabase.co',
+                        key: 'sb_publishable_J-NBJbzsDmxi4BLDek_DEg_SCJ2DGz8'
+                    }
+                };
+                const sb = supabaseProjects[freebie] || {
+                    url: 'https://fciijklqnqyvqbvrqjcr.supabase.co',
+                    key: 'sb_publishable_qO4Po8RNvRq9yIU79EnmVg_c_10nL3M'
+                };
+                const response = await fetch(`${sb.url}/rest/v1/leads`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'apikey': 'sb_publishable_qO4Po8RNvRq9yIU79EnmVg_c_10nL3M',
-                        'Authorization': 'Bearer sb_publishable_qO4Po8RNvRq9yIU79EnmVg_c_10nL3M'
+                        'apikey': sb.key,
+                        'Authorization': `Bearer ${sb.key}`
                     },
                     body: JSON.stringify({
                         name: name,
@@ -272,9 +287,9 @@
 
                 if (response.ok) {
                     // Trigger n8n webhook to send email — route per freebie
-                    // tradingview-prompt gaat via v2 workflow (Gmail), rest via oude lead-freebie (Brevo)
                     const webhookPaths = {
-                        'tradingview-prompt': 'lead-freebie-v2'
+                        'tradingview-prompt': 'lead-freebie-v2',
+                        'claude-md': 'claude-md'
                     };
                     const webhookPath = webhookPaths[freebie] || 'lead-freebie';
                     fetch(`https://davycc.app.n8n.cloud/webhook/${webhookPath}`, {

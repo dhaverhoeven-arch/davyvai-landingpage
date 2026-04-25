@@ -1,0 +1,53 @@
+{
+  "name": "Claude MD Email",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "claude-md",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-cmd",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "claude-md"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.email }}",
+        "subject": "Je CLAUDE.md template — het geheugen van Claude",
+        "emailType": "html",
+        "message": "=<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; padding: 40px 24px; background: #0A0A0A; color: #FFFFFF;\">\n\n<div style=\"display: inline-block; padding: 6px 14px; background: rgba(217, 119, 87, 0.15); color: #D97757; border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 24px;\">CLAUDE.MD · GRATIS</div>\n\n<h1 style=\"font-size: 26px; font-weight: 900; line-height: 1.25; margin: 0 0 20px 0; color: #FFFFFF;\">Hey {{ $('Webhook').item.json.body.name || 'daar' }}, hier is hij.</h1>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 16px; color: #D0D0D0;\">Top dat je 'm hebt aangevraagd. Dit is je persoonlijke <strong style=\"color: #FFFFFF;\">CLAUDE.md template</strong> — het bestand dat Claude leert wie je bent, wat je doet en hoe je werkt.</p>\n\n<p style=\"margin: 24px 0;\"><a href=\"https://drive.google.com/file/d/1b7jW2HnFzXn8xYCLhSFPK8Adn16GMAep/view?usp=sharing\" style=\"display: inline-block; padding: 14px 28px; background: #D97757; color: #0A0A0A; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px;\">Download je CLAUDE.md →</a></p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 12px; color: #D0D0D0;\"><strong style=\"color: #FFFFFF;\">Zo gebruik je 'm:</strong></p>\n<ol style=\"font-size: 15px; line-height: 1.8; margin: 0 0 24px 0; padding-left: 20px; color: #D0D0D0;\">\n<li>Ga naar <a href=\"https://claude.ai/download\" style=\"color: #D97757;\">claude.ai/download</a> en installeer Claude (Pro plan, €18/mnd)</li>\n<li>Maak een mapje aan, bijv. \"MijnBusiness\"</li>\n<li>Sla het bestand op als <code style=\"background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; color: #D97757;\">CLAUDE.md</code> in dat mapje</li>\n<li>Open de map in Claude Code</li>\n<li>Type <strong style=\"color: #FFFFFF;\">\"help me mijn CLAUDE.md invullen\"</strong></li>\n<li>Claude stelt je vragen — beantwoord ze en je hebt 'm</li>\n</ol>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 16px; color: #D0D0D0;\">Werk altijd vanuit dezelfde map. Claude onthoudt je instellingen omdat het bestand daar staat — dat is het geheugen.</p>\n\n<p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 24px; color: #D0D0D0;\">Loop je vast? Stuur me een DM op Instagram, ik help je persoonlijk verder.</p>\n\n<p style=\"margin-bottom: 32px;\"><a href=\"https://instagram.com/davyv.ai\" style=\"display: inline-block; padding: 12px 24px; background: transparent; color: #D97757; border: 1px solid #D97757; text-decoration: none; border-radius: 999px; font-weight: 600; font-size: 14px;\">DM @davyv.ai →</a></p>\n\n<p style=\"font-size: 15px; margin-bottom: 4px; color: #D0D0D0;\">Succes ermee,</p>\n<p style=\"font-size: 15px; margin: 0; color: #FFFFFF;\"><strong>Davy</strong></p>\n\n<div style=\"margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 12px; color: #808080;\">\nJe krijgt deze mail omdat je je CLAUDE.md hebt aangevraagd via davyvai.nl.\n</div>\n\n</div>",
+        "options": {}
+      },
+      "id": "gmail-cmd",
+      "name": "Email CLAUDE.md",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [550, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true}",
+        "options": {}
+      },
+      "id": "respond-cmd",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [850, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Email CLAUDE.md", "type": "main", "index": 0 }]]
+    },
+    "Email CLAUDE.md": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  }
+}
